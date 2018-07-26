@@ -1,0 +1,86 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Unix Timestamp Converter</title>
+    <meta name="description" content="Convert a unix timestamp into human readable formats.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="unix-timestamp-converter/css/normalize.css">
+    <link rel="stylesheet" href="unix-timestamp-converter/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500|Rubik:300,500" rel="stylesheet">
+    <script src="unix-timestamp-converter/js/moment.js"></script>
+    <script src="unix-timestamp-converter/js/moment-timezone.js"></script>
+
+    <link rel="canonical" href="http://danieljball.co.uk/unix-timestamp-converter">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-holder container">
+            <div class="company"><a href="#">Unix Timestamp Converter</a></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="sub-header-section">
+            <h1 class="page-header">Enter a Unix timestamp</h1>
+            <input id="unix-input" type='text' value=''>
+            <input type='submit' id='convert' value='Convert' onclick='convert();'>
+        </section>
+        <section>
+            <div class="row">
+                <div class="six columns">
+                    <div class="post-para">Coordinated Universal Time</div>
+                    <p class="post-header" id='utc-time'></p>
+                </div>
+                <div class="six columns">
+                    <div class="post-para">Current timezone</div>
+                    <p class="post-header" id='user-time'></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <div class="post-para">ISO 8601</div>
+                    <p class="post-header" id='iso-time'></p>
+                </div>
+                <div class="six columns">
+                    <div class="post-para">RFC 2822</div>
+                    <p class="post-header" id='rfc-time'></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <div class="post-para">Day of the year</div>
+                    <p class="post-header" id='day-time'></p>
+                </div>
+                <div class="six columns">
+                    <div class="post-para">Week of the year</div>
+                    <p class="post-header" id='week-time'></p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+<script>
+    document.getElementById('unix-input').value = moment().unix();
+    convert();
+    function convert(){
+
+        // Unixtimestamp
+        var unixtimestamp = document.getElementById('unix-input').value;
+        var datetime = moment.unix(unixtimestamp);
+        document.getElementById('utc-time').innerHTML = datetime.utc().format('MMMM Do YYYY, HH:mm:ss a');
+        var DATE_ISO8601 = "YYYY-MM-DDTHH:mm:ssZ";
+        document.getElementById('iso-time').innerHTML = datetime.format(DATE_ISO8601);
+        var DATE_RFC2822 = "ddd, DD MMM YYYY HH:mm:ss ZZ";
+        document.getElementById('rfc-time').innerHTML = datetime.format(DATE_RFC2822);
+        document.getElementById('user-time').innerHTML = datetime.local().format('MMMM Do YYYY, HH:mm:ss a');
+        document.getElementById('week-time').innerHTML = datetime.week();
+        document.getElementById('day-time').innerHTML = datetime.dayOfYear();
+    }
+</script>
+</html>
